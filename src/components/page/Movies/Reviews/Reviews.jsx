@@ -9,7 +9,7 @@ const Reviews = () => {
     const fetchMovieReviews = async () => {
       await getMovieReviews(id).then(({ results }) => {
         setReviews(results);
-        console.log(results);
+        // console.log(results);
       });
     };
     if (id) {

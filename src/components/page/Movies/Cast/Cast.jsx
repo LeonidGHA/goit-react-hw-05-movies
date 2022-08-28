@@ -37,7 +37,7 @@ const Cast = () => {
       {actors.length !== 0 ? (
         <ul className={css.list}>{renderActors}</ul>
       ) : (
-        <p>We dont have any reviews for this movie</p>
+        <p>We dont have any actors for this movie</p>
       )}
     </>
   );

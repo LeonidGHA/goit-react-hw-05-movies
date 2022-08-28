@@ -1,29 +1,26 @@
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getTrending } from 'components/request-api/tmbdRequestApi';
 
 import css from './Home.module.css';
 
 const Home = () => {
   const [filmArr, setFilmArr] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const firstArr = useRef(filmArr);
+  const fetchTrending = useCallback(() => {
+    const trendingCall = async () => {
+      await getTrending(page).then(({ results }) => {
+        setFilmArr(results);
+      });
+    };
+    trendingCall();
+  }, [page]);
 
   useEffect(() => {
-    if (firstArr !== filmArr) {
-      const fetchTrending = async () => {
-        await getTrending().then(({ results }) => {
-          // console.log(results);
-          setFilmArr(results);
-          firstArr.current = filmArr;
-        });
-      };
-      if (filmArr) {
-        fetchTrending();
-      }
-    }
-  }, [filmArr]);
-  // console.log(firstArr);
+    fetchTrending();
+  }, [fetchTrending]);
+
   const renderMovies = filmArr.map(
     ({ poster_path, original_title, vote_average, id }) => (
       <li key={id} className={css.item}>
@@ -45,7 +42,30 @@ const Home = () => {
       </li>
     )
   );
-  return <ul className={css.list}>{renderMovies}</ul>;
+  return (
+    <>
+      <ul className={css.list}>{renderMovies}</ul>
+      <div className={css.thumb}>
+        {page !== 1 && (
+          <button
+            className={css.btn}
+            type="button"
+            onClick={() => setPage(page - 1)}
+          >
+            Pevios page
+          </button>
+        )}
+
+        <button
+          className={css.btn}
+          type="button"
+          onClick={() => setPage(page + 1)}
+        >
+          Next page
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default Home;

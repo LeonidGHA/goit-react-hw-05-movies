@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import { getSearch } from 'components/request-api/tmbdRequestApi';
 import Notiflix from 'notiflix';
 import css from './Movies.module.css';
 
 const Movies = () => {
-  const [search, setSerach] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchValue = searchParams.get('query') ?? '';
 
   useEffect(() => {
     const fetchSearch = async () => {
-      await getSearch(search).then(({ results }) => {
+      await getSearch(searchValue).then(({ results }) => {
         if (results.length === 0) {
           Notiflix.Report.failure(
             'Invalid request',
@@ -23,13 +24,14 @@ const Movies = () => {
         setSearchResult(results);
       });
     };
-    if (search) {
+    if (searchValue) {
       fetchSearch();
     }
-  }, [search]);
+  }, [searchValue]);
 
   const submitValue = data => {
-    setSerach(data);
+    // console.log(data);
+    setSearchParams({ query: data });
   };
 
   const renderMovies = searchResult.map(

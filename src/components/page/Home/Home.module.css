@@ -39,3 +39,20 @@
   font-size: 20px;
   color: grey;
 }
+.thumb {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+.btn {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: none;
+  background-color: coral;
+  color: aliceblue;
+  min-width: 150px;
+}

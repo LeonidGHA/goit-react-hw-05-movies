@@ -7,6 +7,7 @@ export const getTrending = async page => {
   const { data } = await axios.get(`${BASE_URL}/trending/movie/week`, {
     params: {
       api_key: API_KEY,
+      page,
     },
   });
 
