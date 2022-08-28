@@ -30,7 +30,6 @@ const Movies = () => {
   }, [searchValue]);
 
   const submitValue = data => {
-    // console.log(data);
     setSearchParams({ query: data });
   };
 

@@ -11,14 +11,12 @@ const MoviesDetails = () => {
     const fetchMovieDetails = async () => {
       await getMovieDetails(id).then(data => {
         setDetails(data);
-        // console.log(data);
       });
     };
-    if (details) {
+    if (id) {
       fetchMovieDetails();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
   const {
     poster_path,
     original_title,
