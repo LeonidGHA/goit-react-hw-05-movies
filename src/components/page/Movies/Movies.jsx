@@ -2,14 +2,24 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import { getSearch } from 'components/request-api/tmbdRequestApi';
+import Notiflix from 'notiflix';
+import css from './Movies.module.css';
 
 const Movies = () => {
   const [search, setSerach] = useState('');
   const [searchResult, setSearchResult] = useState([]);
-  // console.log(useParams);
+
   useEffect(() => {
     const fetchSearch = async () => {
       await getSearch(search).then(({ results }) => {
+        if (results.length === 0) {
+          Notiflix.Report.failure(
+            'Invalid request',
+            '"No matches were found for your search" <br/><br/>- Henry Ford',
+            'Okay'
+          );
+          return;
+        }
         setSearchResult(results);
       });
     };
@@ -21,14 +31,21 @@ const Movies = () => {
   const submitValue = data => {
     setSerach(data);
   };
-  // console.log(searchResult);
+
   const renderMovies = searchResult.map(
-    ({ backdrop_path, original_title, vote_average, id }) => (
-      <li key={id}>
-        <NavLink to={`/Movies/${id}`}>
-          <img src={`https://image.tmdb.org/t/p/w200${backdrop_path}`} alt="" />
-          <p>{original_title}</p>
-          <p>{vote_average.toFixed(2)}</p>
+    ({ poster_path, original_title, vote_average, id }) => (
+      <li key={id} className={css.item}>
+        <NavLink to={`/Movies/${id}`} className={css.item_link}>
+          <img
+            src={
+              poster_path
+                ? `https://image.tmdb.org/t/p/original/${poster_path}`
+                : `https://static.vecteezy.com/system/resources/previews/003/393/235/original/error-404-with-the-cute-floppy-disk-mascot-free-vector.jpg`
+            }
+            alt=""
+          />
+          <p className={css.title}>{original_title}</p>
+          <p className={css.rating}>{vote_average.toFixed(2)}</p>
         </NavLink>
       </li>
     )
@@ -36,18 +53,18 @@ const Movies = () => {
 
   return (
     <div>
-      {search.length > 0 && (
-        <NavLink to="/">
-          <button type="button">Go back</button>
-        </NavLink>
-      )}
-
-      <ul>{renderMovies}</ul>
-      {!search.length > 0 && (
+      {searchResult.length !== 0 && (
         <>
-          <Searchbar submitValue={submitValue} />
+          <NavLink to="/">
+            <button type="button" className={css.btn}>
+              &#11160; Go back
+            </button>
+          </NavLink>
+          <ul className={css.list}>{renderMovies}</ul>
         </>
       )}
+
+      {searchResult.length === 0 && <Searchbar submitValue={submitValue} />}
     </div>
   );
 };

@@ -1,0 +1,45 @@
+.container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.btn {
+  border: none;
+  padding: 5px 10px;
+  margin-left: 40px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: text-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover,
+.btn:focus {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: crimson;
+}
+
+.details {
+  display: flex;
+  border-bottom: 2px solid gray;
+  padding-bottom: 20px;
+}
+
+.details_poster {
+  width: 600px;
+  margin-right: 40px;
+}
+.list {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.list_Link {
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+}
+
+.active {
+  color: red;
+}

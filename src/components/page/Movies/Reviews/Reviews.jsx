@@ -9,19 +9,28 @@ const Reviews = () => {
     const fetchMovieReviews = async () => {
       await getMovieReviews(id).then(({ results }) => {
         setReviews(results);
+        console.log(results);
       });
     };
-    if (reviews) {
+    if (id) {
       fetchMovieReviews();
     }
-  }, [id, reviews]);
+  }, [id]);
   const renderReviews = reviews.map(({ author, content, id }) => (
     <li key={id}>
       <h4>Author: {author}</h4>
       <p>{content}</p>
     </li>
   ));
-  return <ul>{renderReviews}</ul>;
+  return (
+    <>
+      {reviews.length !== 0 ? (
+        <ul>{renderReviews}</ul>
+      ) : (
+        <p>We dont have any reviews for this movie</p>
+      )}
+    </>
+  );
 };
 
 export default Reviews;

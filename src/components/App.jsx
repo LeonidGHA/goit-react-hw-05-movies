@@ -1,5 +1,7 @@
 import { Route, Routes, NavLink } from 'react-router-dom';
 
+import css from './App.module.css';
+
 import Home from './page/Home/Home';
 import Movies from './page/Movies/Movies';
 import MoviesDetails from './page/Movies/MoviesDetails';
@@ -8,10 +10,28 @@ import Reviews from './page/Movies/Reviews/Reviews';
 
 export const App = () => {
   return (
-    <div>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/Movies">Movies</NavLink>
+    <div className={css.container}>
+      <nav className={css.navigation}>
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? `${css.navigationLink} ${css.active}`
+              : `${css.navigationLink}`
+          }
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? `${css.navigationLink} ${css.active}`
+              : `${css.navigationLink}`
+          }
+          to="/Movies"
+        >
+          Movies
+        </NavLink>
       </nav>
 
       <Routes>
