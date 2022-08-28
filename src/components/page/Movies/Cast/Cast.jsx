@@ -9,7 +9,6 @@ const Cast = () => {
     const fetchMovieCredits = async () => {
       await getMovieCredits(id).then(({ cast }) => {
         setActors(cast);
-        // console.log(cast);
       });
     };
     if (id) {
