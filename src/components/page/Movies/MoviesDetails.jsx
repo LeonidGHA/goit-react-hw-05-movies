@@ -1,12 +1,13 @@
 import { useParams, NavLink, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getMovieDetails } from 'components/request-api/tmbdRequestApi';
-
+import Button from 'components/Button';
 import css from './MoviesDetails.module.css';
 
 const MoviesDetails = () => {
   const { id } = useParams();
   const [details, setDetails] = useState({});
+
   useEffect(() => {
     const fetchMovieDetails = async () => {
       await getMovieDetails(id).then(data => {
@@ -28,11 +29,7 @@ const MoviesDetails = () => {
 
   return (
     <div className={css.container}>
-      <NavLink to="/">
-        <button className={css.btn} type="button">
-          &#11160; Go back
-        </button>
-      </NavLink>
+      <Button />
       <div className={css.details}>
         <div className={css.details_poster}>
           <img

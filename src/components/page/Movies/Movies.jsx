@@ -4,6 +4,7 @@ import Searchbar from './Searchbar';
 import { getSearch } from 'components/request-api/tmbdRequestApi';
 import Notiflix from 'notiflix';
 import css from './Movies.module.css';
+import Button from 'components/Button';
 
 const Movies = () => {
   const [searchResult, setSearchResult] = useState([]);
@@ -21,6 +22,7 @@ const Movies = () => {
           );
           return;
         }
+
         setSearchResult(results);
       });
     };
@@ -56,11 +58,7 @@ const Movies = () => {
     <div>
       {searchResult.length !== 0 && (
         <>
-          <NavLink to="/">
-            <button type="button" className={css.btn}>
-              &#11160; Go back
-            </button>
-          </NavLink>
+          <Button />
           <ul className={css.list}>{renderMovies}</ul>
         </>
       )}

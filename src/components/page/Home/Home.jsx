@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getTrending } from 'components/request-api/tmbdRequestApi';
 
 import css from './Home.module.css';
@@ -8,18 +8,14 @@ const Home = () => {
   const [filmArr, setFilmArr] = useState([]);
   const [page, setPage] = useState(1);
 
-  const fetchTrending = useCallback(() => {
-    const trendingCall = async () => {
+  useEffect(() => {
+    const fetchTrending = async () => {
       await getTrending(page).then(({ results }) => {
         setFilmArr(results);
       });
     };
-    trendingCall();
-  }, [page]);
-
-  useEffect(() => {
     fetchTrending();
-  }, [fetchTrending]);
+  }, [page]);
 
   const renderMovies = filmArr.map(
     ({ poster_path, original_title, vote_average, id }) => (

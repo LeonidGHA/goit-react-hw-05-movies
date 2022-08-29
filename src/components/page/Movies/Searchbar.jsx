@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import Notiflix from 'notiflix';
 import css from './Searchbar.module.css';
 
 const Searchbar = ({ submitValue }) => {
@@ -12,6 +12,11 @@ const Searchbar = ({ submitValue }) => {
 
   const onSubmit = e => {
     e.preventDefault();
+
+    if (search === '') {
+      Notiflix.Notify.warning('Enter the name of the film');
+      return;
+    }
     submitValue(search);
     reset();
   };
